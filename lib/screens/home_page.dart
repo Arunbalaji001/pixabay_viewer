@@ -91,14 +91,16 @@ class _HomePageState extends State<HomePage> {
                         crossAxisSpacing: 10.0, // Horizontal spacing between items
                         mainAxisSpacing: 10.0, // Vertical spacing between items
                         childAspectRatio: 0.75, // Aspect ratio of items
+                        mainAxisExtent: 224
                       ),
                         itemCount: imagesData.length,
                         itemBuilder: (context, index) {
                           return Container(
-                            height: 240,
+                            // height: 240,
                             color: Colors.blueGrey.shade100,
                             alignment: Alignment.center,
                             child: Column(
+                              mainAxisSize: MainAxisSize.min,
                               children: [
                                 Image.network(
                                   imagesData[index].previewURL.toString(),
