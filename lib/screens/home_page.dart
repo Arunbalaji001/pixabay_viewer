@@ -5,6 +5,7 @@ import 'package:flutter_styled_toast/flutter_styled_toast.dart';
 import 'package:pixabay_image_viewer/constants/app_constants.dart';
 import 'package:pixabay_image_viewer/cubits/image_getter_cubit.dart';
 import 'package:pixabay_image_viewer/models/image_data_model.dart';
+import 'package:pixabay_image_viewer/screens/imageview_page.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -95,91 +96,101 @@ class _HomePageState extends State<HomePage> {
                       ),
                         itemCount: imagesData.length,
                         itemBuilder: (context, index) {
-                          return Container(
-                            // height: 240,
-                            color: Colors.blueGrey.shade100,
-                            alignment: Alignment.center,
-                            child: Column(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                Image.network(
-                                  imagesData[index].previewURL.toString(),
-                                  height: 160,
-                                  errorBuilder: (context, error, stackTrace) {
-                                    return const Icon(
-                                      Icons.image_outlined,
-                                      color: Colors.blueGrey,
-                                      size: 36,
-                                    );
-                                  },
-                                ),
-                                const SizedBox(height: 6,),
-                                Padding(
-                                  padding: const EdgeInsets.symmetric(horizontal: 12),
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Column(
-                                        children: [
-                                          Row(
-                                            children: [
-                                              const Icon(
-                                                Icons.remove_red_eye_sharp,
-                                                color: Colors.deepPurple,
-                                                size: 16,
-                                              ),
-                                              const SizedBox(width: 4,),
-                                              Text(
-                                                'Views',
-                                                style: Theme.of(context).textTheme.bodySmall?.apply(
-                                                    color: Colors.blueGrey,
-                                                    fontSizeDelta: -2,
-                                                    fontWeightDelta: 2
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                          Text(
-                                            (imagesData[index].views??0).toString(),
-                                            style: Theme.of(context).textTheme.bodySmall?.apply(
-                                                color: Colors.blueGrey
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                      Row(
-                                        children: [
-                                          const Icon(
-                                            Icons.favorite,
-                                            color: Colors.pink,
-                                            size: 16,
-                                          ),
-                                          const SizedBox(width: 4,),
-                                          Column(
-                                            crossAxisAlignment: CrossAxisAlignment.start,
-                                            children: [
-                                              Text(
-                                                'Likes',
-                                                style: Theme.of(context).textTheme.bodySmall?.apply(
-                                                    color: Colors.blueGrey,
-                                                    fontSizeDelta: -2,
-                                                    fontWeightDelta: 2
-                                                ),
-                                              ),
-                                              Text(
-                                                (imagesData[index].likes??0).toString(),
-                                                style: Theme.of(context).textTheme.bodySmall?.apply(
-                                                  color: Colors.blueGrey
-                                                ),
-                                              ),
-                                            ],
-                                          )
-                                        ],
-                                      )
-                                    ],
+                          return InkWell(
+                            onTap: ()=> Navigator.of(context).push(
+                              MaterialPageRoute(builder: (context) {
+                                return  ImageViewPage(
+                                  imageData: imagesData[index],
+                                );
+                              },)
+                            ),
+                            child: Container(
+                              // height: 240,
+                              color: Colors.blueGrey.shade100,
+                              alignment: Alignment.center,
+                              child: Column(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  Expanded(
+                                    child: Image.network(
+                                      imagesData[index].previewURL.toString(),
+                                      errorBuilder: (context, error, stackTrace) {
+                                        return const Icon(
+                                          Icons.image_outlined,
+                                          color: Colors.blueGrey,
+                                          size: 36,
+                                        );
+                                      },
+                                    ),
                                   ),
-                                )
-                              ],
+                                  const SizedBox(height: 6,),
+                                  Padding(
+                                    padding: const EdgeInsets.symmetric(horizontal: 12),
+                                    child: Row(
+                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Column(
+                                          children: [
+                                            Row(
+                                              children: [
+                                                const Icon(
+                                                  Icons.remove_red_eye_sharp,
+                                                  color: Colors.deepPurple,
+                                                  size: 16,
+                                                ),
+                                                const SizedBox(width: 4,),
+                                                Text(
+                                                  'Views',
+                                                  style: Theme.of(context).textTheme.bodySmall?.apply(
+                                                      color: Colors.blueGrey,
+                                                      fontSizeDelta: -2,
+                                                      fontWeightDelta: 2
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                            Text(
+                                              (imagesData[index].views??0).toString(),
+                                              style: Theme.of(context).textTheme.bodySmall?.apply(
+                                                  color: Colors.blueGrey
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                        Row(
+                                          children: [
+                                            const Icon(
+                                              Icons.favorite,
+                                              color: Colors.pink,
+                                              size: 16,
+                                            ),
+                                            const SizedBox(width: 4,),
+                                            Column(
+                                              crossAxisAlignment: CrossAxisAlignment.start,
+                                              children: [
+                                                Text(
+                                                  'Likes',
+                                                  style: Theme.of(context).textTheme.bodySmall?.apply(
+                                                      color: Colors.blueGrey,
+                                                      fontSizeDelta: -2,
+                                                      fontWeightDelta: 2
+                                                  ),
+                                                ),
+                                                Text(
+                                                  (imagesData[index].likes??0).toString(),
+                                                  style: Theme.of(context).textTheme.bodySmall?.apply(
+                                                    color: Colors.blueGrey
+                                                  ),
+                                                ),
+                                              ],
+                                            )
+                                          ],
+                                        )
+                                      ],
+                                    ),
+                                  )
+                                ],
+                              ),
                             ),
                           );
                         },),
